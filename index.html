@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Sort Algorithms Visualizer</h1>
+    <div id="input_container" class="input_container">
+        <form id="form">
+        <input list="algorithms" name="algorithm" id="algorithm" placeholder="Algorithm" contenteditable="false">
+        <datalist id="algorithms" >
+            <option value="Bubble Sort">
+            <option value="Quick Sort">
+            <option value="Selection Sort">
+        </datalist>       
+        <input type="number" placeholder="Samples" id="samples" min="2" max="20" style="width: 60px;">
+
+        <input type="submit" value="TRY!" id="button">
+    </form>
+    </div>
+
+    <div id="divs_container" class="divs_container">
+
+    </div>
+    <footer>
+        <script src="index.js"></script>
+    </footer>
+</body>
+</html>
