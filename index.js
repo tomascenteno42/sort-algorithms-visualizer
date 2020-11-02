@@ -40,26 +40,24 @@ const renderDom = async () => {
   button.style.visibility = "visible";
 };
 
-const styleDiv = (div, width) => {
-  div.style.height = `${
-    (window.innerHeight - inputContainer.offsetHeight) / items.value / 2
-  }px`;
+const styleDiv = (div, height) => {
+  div.style.width = `${window.innerWidth / items.value / 2}px`;
   div.style.backgroundColor = color.pink;
-  div.style.width = width + "%";
+  div.style.height = height + "%";
 };
 
 const createDivs = () => {
-  let divWidth = 0;
+  let divHeight = 0;
   for (let i = 0; i < totalDivs; i++) {
     let div = document.createElement("div");
     divsContainer.append(div);
 
-    divWidth = randomWidth();
+    divHeight = randomHeight();
 
-    styleDiv(div, divWidth.toString());
+    styleDiv(div, divHeight.toString());
 
     divs.push(div);
-    divsLength[i] = divWidth;
+    divsLength[i] = divHeight;
   }
 };
 
@@ -72,9 +70,9 @@ const bubbleSortDivs = async (speed) => {
     for (let j = 0; j < len - i - 1; j++) {
       await sleep(speed);
       swap = false;
-      if (parseInt(divs[j].style.width) > parseInt(divs[j + 1].style.width)) {
+      if (parseInt(divs[j].style.height) > parseInt(divs[j + 1].style.height)) {
         swap = true;
-        updateDivwidth(j);
+        updateDivHeight(j);
         updateDivColor(divs[j + 1], color.orange);
         updateDivColor(divs[j], color.pink);
       }
@@ -90,26 +88,26 @@ const bubbleSortDivs = async (speed) => {
 };
 
 const swap = (divs, leftIndex, rightIndex) => {
-  let temp = divs[leftIndex].style.width;
-  divs[leftIndex].style.width = divs[rightIndex].style.width;
-  divs[rightIndex].style.width = temp;
+  let temp = divs[leftIndex].style.height;
+  divs[leftIndex].style.height = divs[rightIndex].style.height;
+  divs[rightIndex].style.height = temp;
 };
 
 const partition = async (divs, left, right, speed) => {
   let pivotIndex = Math.floor((right + left) / 2);
-  let pivot = parseInt(divs[Math.floor((right + left) / 2)].style.width); //middle element
+  let pivot = parseInt(divs[Math.floor((right + left) / 2)].style.height); //middle element
 
   i = left; //left pointer
   j = right; //right pointer
   while (i <= j) {
-    while (parseInt(divs[i].style.width) < pivot) {
+    while (parseInt(divs[i].style.height) < pivot) {
       updateDivColor(divs[pivotIndex], color.red);
       await sleep(speed);
       updateDivColor(divs[i], color.pink);
       i++;
       updateDivColor(divs[i], color.orange);
     }
-    while (parseInt(divs[j].style.width) > pivot) {
+    while (parseInt(divs[j].style.height) > pivot) {
       updateDivColor(divs[pivotIndex], color.red);
       await sleep(speed);
       updateDivColor(divs[j], color.pink);
@@ -146,10 +144,10 @@ const quickSortDivs = async (divs, left, right, speed) => {
   }
 };
 
-const updateDivwidth = (index) => {
-  const aux = divs[index].style.width;
-  divs[index].style.width = divs[index + 1].style.width;
-  divs[index + 1].style.width = aux;
+const updateDivHeight = (index) => {
+  const aux = divs[index].style.height;
+  divs[index].style.height = divs[index + 1].style.height;
+  divs[index + 1].style.height = aux;
 };
 
 const updateDivColor = (div, color) => {
@@ -162,7 +160,7 @@ const deleteDivs = (divs, totalDivs) => {
   }
 };
 
-const randomWidth = () => {
+const randomHeight = () => {
   return Math.floor(Math.random() * 101);
 };
 
