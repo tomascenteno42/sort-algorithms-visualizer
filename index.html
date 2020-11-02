@@ -1,30 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="leading-tight">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="./build/css/output.css">
     <title>Document</title>
 </head>
-<body>
-    <h1>Sort Algorithms Visualizer</h1>
-    <div id="input_container" class="input_container">
-        <form id="form">
-        <input list="algorithms" name="algorithm" id="algorithm" placeholder="Algorithm" contenteditable="false">
-        <datalist id="algorithms" >
-            <option value="Bubble Sort">
-            <option value="Quick Sort">
-            <option value="Selection Sort">
-        </datalist>       
-        <input type="number" placeholder="Samples" id="samples" min="2" max="20" style="width: 60px;">
-
-        <input type="submit" value="TRY!" id="button">
-    </form>
+<body class=" bg-black">
+    <div class="pt-10 flex justify-center align-middle" id="input_container">
+        <div class="flex flex-wrap -mx-3 mb-2 justify-center">
+            <div class="px-3 mb-6 md:w-1/3 md:mb-0">
+            <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2" for="grid-state">
+                Sort
+            </label>
+            <div class="relative">
+                <select id="options" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                <option>Bubble</option>
+                <option>Quick</option>
+                <option>Selection</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                </div>
+            </div>
+            </div>
+            <div class="px-3 mb-6 md:w-1/3 md:mb-0">
+                <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2" for="grid-zip">
+                    Samples
+                </label>
+                <input id="samples" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="number" min="2" value="2">
+            </div>
+            <div class="px-3 mb-6 md:w-1/3 md:mb-0">
+                <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2" for="grid-zip">
+                    Speed in MS
+                </label>
+                <input id="speed" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="number" min="1" value="1000">
+            </div>
+            <div class="flex flex-wrap mt-3 -mx-3 items-center justify-center">
+                <div class="px-3 mb-4 ">
+                    <input class="block w-full bg-blue-500 text-white border border-blue-500 rounded py-2 px-6 hover:text-black hover:bg-white hover:outline-none" type="submit" id="button" value="TRY!">
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div id="divs_container" class="divs_container">
-
-    </div>
+    
+    <div id="divs_container" class="flex flex-col justify-between"></div>
     <footer>
         <script src="index.js"></script>
     </footer>
