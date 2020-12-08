@@ -6,6 +6,7 @@ const selectedOption = document.getElementById("options");
 const speedInput = document.getElementById("speed");
 
 let divs = [];
+let divsCopy = [];
 let divsLength = [];
 let totalDivs = 0;
 
@@ -31,12 +32,12 @@ const renderDom = async () => {
     divs = [];
     divsLength = [];
   }
-
   totalDivs = items.value;
 
   createDivs();
+  divsCopy = [...divs];
+  divsLength = divsLength.sort((a, b) => a - b);
   await renderAlgorithm(option, speed);
-
   button.style.visibility = "visible";
 };
 
@@ -67,6 +68,7 @@ const bubbleSortDivs = async (speed) => {
   let swap;
 
   for (let i = 0; i < len - 1; i++) {
+    updateDivColor(getDivByValue(divsLength[k]), color.white);
     for (let j = 0; j < len - i - 1; j++) {
       await sleep(speed);
       swap = false;
@@ -82,15 +84,27 @@ const bubbleSortDivs = async (speed) => {
         updateDivColor(divs[j], color.pink);
       }
     }
+
     updateDivColor(divs[k], color.blue);
+    // if (divs[k] != getDivByValue(divsLength[k]) && k != len - 1) {
+    //   updateDivColor(getDivByValue(divsLength[k]), color.red);
+    // }
     k--;
   }
 };
+const getDivByValue = (value) => {
+  for (let i = 0; i < divs.length; i++) {
+    if (parseInt(divsCopy[i].style.height) === value) {
+      console.log(value);
+      return divsCopy[i];
+    }
+  }
+};
 
-const swap = (divs, leftIndex, rightIndex) => {
-  let temp = divs[leftIndex].style.height;
-  divs[leftIndex].style.height = divs[rightIndex].style.height;
-  divs[rightIndex].style.height = temp;
+const swap = (i, j) => {
+  let temp = divs[i].style.height;
+  divs[i].style.height = divs[j].style.height;
+  divs[j].style.height = temp;
 };
 
 const partition = async (divs, left, right, speed) => {
@@ -103,22 +117,26 @@ const partition = async (divs, left, right, speed) => {
     while (parseInt(divs[i].style.height) < pivot) {
       updateDivColor(divs[pivotIndex], color.red);
       await sleep(speed);
-      updateDivColor(divs[i], color.pink);
-      i++;
       updateDivColor(divs[i], color.orange);
+      i++;
+      updateDivColor(divs[i], color.pink);
     }
+    updateDivColor(divs[pivotIndex], color.pink);
     while (parseInt(divs[j].style.height) > pivot) {
       updateDivColor(divs[pivotIndex], color.red);
+
+      updateDivColor(divs[j], color.orange);
       await sleep(speed);
       updateDivColor(divs[j], color.pink);
       j--;
-      updateDivColor(divs[j], color.orange);
     }
+    updateDivColor(divs[pivotIndex], color.pink);
+
     if (i <= j) {
       updateDivColor(divs[i], color.white);
-      updateDivColor(divs[j], color.white);
+      updateDivColor(divs[j], color.blue);
       await sleep(speed);
-      swap(divs, i, j); //sawpping two elements
+      swap(i, j); //sawpping two elements
       updateDivColor(divs[i], color.pink);
       updateDivColor(divs[j], color.pink);
       i++;
@@ -141,6 +159,30 @@ const quickSortDivs = async (divs, left, right, speed) => {
     if (index < right) {
       await quickSortDivs(divs, index, right, speed);
     }
+  }
+};
+
+const selectionSortDivs = async (speed) => {
+  let len = divs.length;
+
+  for (let i = 0; i < len; i++) {
+    let min = i;
+    await sleep(speed);
+    for (let j = i + 1; j < len; j++) {
+      if (parseInt(divs[min].style.height) > parseInt(divs[j].style.height)) {
+        min = j;
+      }
+    }
+    if (min !== i) {
+      updateDivColor(divs[min], color.white);
+      updateDivColor(divs[i], color.blue);
+      await sleep(speed);
+
+      swap(i, min);
+      updateDivColor(divs[min], color.pink);
+      updateDivColor(divs[i], color.pink);
+    }
+    updateDivColor(divs[i], color.orange);
   }
 };
 
@@ -176,6 +218,8 @@ const renderAlgorithm = async (option, speed) => {
     case 1:
       await quickSortDivs(divs, 0, divs.length - 1, speed);
       break;
+    case 2:
+      await selectionSortDivs(speed);
 
     default:
       break;
